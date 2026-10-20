@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,8 +70,17 @@ fun Dice( modifier: Modifier = Modifier) {
             painter = painterResource(id = diceImages[diceNumber]),
             contentDescription = "Dice",
             modifier = Modifier
-                .clickable {
-                    diceNumber = (1..6).random()
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = {
+
+                            diceNumber = (1..6).random()
+                        },
+                        onDoubleTap = {
+
+                            diceNumber = 0
+                        }
+                    )
                 }
         )
 
